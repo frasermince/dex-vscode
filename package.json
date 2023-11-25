@@ -16,6 +16,14 @@
       {
         "command": "dex.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "dex.nextFile",
+        "title": "Go to next annotation"
+      },
+      {
+        "command": "dex.copyAndProgress",
+        "title": "Copy current annotation and go to next"
       }
     ],
     "views": {
