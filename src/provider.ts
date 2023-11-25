@@ -299,7 +299,7 @@ export class FileSystemProvider
       (folder) => folder.uri.scheme === "file"
     )[0];
     const rootDir = {
-      uri: vscode.Uri.file("/Users/frasermince/Documents/champion/images/"),
+      uri: vscode.Uri.file(path.join(workspaceFolder.uri.fsPath, "images")),
     };
     if (rootDir) {
       const children = await this.readDirectory(rootDir.uri);
@@ -322,7 +322,6 @@ export class FileSystemProvider
   }
 
   getTreeItem(element: Entry): vscode.TreeItem {
-    const uri = "/Users/frasermince/Documents/champion/images/";
     const treeItem = new vscode.TreeItem(
       element.uri,
       element.type === vscode.FileType.Directory
@@ -356,12 +355,20 @@ export class FileExplorer {
   }
 
   private openResource(resource: vscode.Uri): void {
+    const workspaceFolder = (vscode.workspace.workspaceFolders ?? []).filter(
+      (folder) => folder.uri.scheme === "file"
+    )[0];
     console.log("RESOURCE", resource);
     const imageResource = vscode.Uri.file(
-      `Users/frasermince/Documents/champion/images/${resource.path}.png`
+      path.join(workspaceFolder.uri.fsPath, "images", resource.path + ".png")
     );
+
     const jsonResource = vscode.Uri.file(
-      `Users/frasermince/Documents/champion/json_files/${resource.path}.json`
+      path.join(
+        workspaceFolder.uri.fsPath,
+        "json_files",
+        resource.path + ".json"
+      )
     );
     vscode.commands.executeCommand("vscode.open", imageResource, {
       viewColumn: vscode.ViewColumn.One,
